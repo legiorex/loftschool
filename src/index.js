@@ -100,14 +100,13 @@ function returnArgumentsArray() {
    console.log(newSum()) выведет 6
  */
 function bindFunction(fn) {
-    var newArray = [];
-    for (var i = 1; i < arguments.length; i++) {
-        newArray.push(arguments[i]);
-    }
-    return function F(){
-        newArray.join(',');
-    }
-}
+    var bindArgs = [].slice.call(arguments, 1);
+    return function F() {
+        // здесь все аргументы будут необходимы
+        var fnArgs = [].slice.call(arguments);
+        return fn.apply(context, bindArgs.concat(fnArgs));
+    };
+};
 
 export {
     returnFirstArgument,
