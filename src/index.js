@@ -102,8 +102,7 @@ function returnArgumentsArray() {
 function bindFunction(fn) {
     var bindArgs = [].slice.call(arguments, 1);
     return function F() {
-        // здесь все аргументы будут необходимы
-        var fnArgs = [].slice.call(arguments);
+       var fnArgs = [].slice.call(arguments);
         return fn.apply(null, bindArgs.concat(fnArgs));
     };
 };
