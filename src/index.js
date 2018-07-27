@@ -104,7 +104,7 @@ function bindFunction(fn) {
     return function F() {
         // здесь все аргументы будут необходимы
         var fnArgs = [].slice.call(arguments);
-        return fn.apply(context, bindArgs.concat(fnArgs));
+        return fn.apply(null, bindArgs.concat(fnArgs));
     };
 };
 

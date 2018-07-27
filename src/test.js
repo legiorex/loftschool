@@ -1,23 +1,22 @@
 function sum (a, b) {
-        return a * b;
-    };
-
-
-
-var wraper = function (func) {
-    for (var i = 1; i < arguments.length; i++){
-
-        console.log ('var: ' + arguments[i]);
-    }
-
-
-
-    return function () {
-        return func.apply (context, arguments);
-
-
-    };
+    return a * b;
 }
-var result = wraper(sum, 5, 10);
-console.log( result() );
+
+function bindFunction(fn) {
+    var bindArgs = [].slice.call(arguments, 1);
+
+        return function F() {
+
+        var fnArgs = [].slice.call(arguments);
+        return fn.apply(null, bindArgs.concat(fnArgs));
+
+        console.log(bindArgs);
+        console.log(fnArgs);
+
+    };
+};
+
+var newSum = bindFunction(sum, 2, 4);
+
+console.log(newSum());
 
