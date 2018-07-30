@@ -1,22 +1,26 @@
+// Функция должна принимать другую функцию (F) и некоторое количество дополнительных аргументов
+// Функция должна привязать переданные аргументы к функции F и вернуть получившуюся функцию
+//
+
 function sum (a, b) {
     return a * b;
 }
 
-function bindFunction(fn) {
-    var bindArgs = [].slice.call(arguments, 1);
+var bindedSum = sum.bind({
+    sum: 10
+});
 
-        return function F() {
 
-        var fnArgs = [].slice.call(arguments);
-        return fn.apply(null, bindArgs.concat(fnArgs));
 
-        console.log(bindArgs);
-        console.log(fnArgs);
+var newSum = bindedSum(sum, 2, 4);
 
-    };
-};
 
-var newSum = bindFunction(sum, 2, 4);
+console.log(newSum);
 
-console.log(newSum());
+
+// var newSum = bindFunction(sum, 2, 4);
+//
+// console.log(newSum());
+
+
 
