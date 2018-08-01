@@ -33,13 +33,15 @@ function map(array, fn) {
  Посмотрите как работает reduce и повторите это поведение для массива, который будет передан в параметре array
  */
 function reduce(array, fn, initial) {
-    let result = initial;
-    for(let i = 0; i < array.length; i++){
-        result = fn.call(result, array[i], i, array);
-    }
-    return result;
-}
+    var x = initial || array[0],
+        i = initial ? 0 : 1;
 
+    for (; i < array.length; i++) {
+        x = fn(x, array[i], i, array);
+    }
+
+    return x;
+}
 /*
  Задание 4:
 
@@ -62,9 +64,33 @@ function upperProps(obj) {
  Напишите аналог встроенного метода slice для работы с массивами
  Посмотрите как работает slice и повторите это поведение для массива, который будет передан в параметре array
  */
-function slice(array, from, to) {
-}
+function slice(array, from, to = 0) {
+    let newArray = [];
+    let arrElem = array.length;
 
+    if ( from > array.length){
+        from = 0;
+
+    } else if (from < 0){
+        from = array.length - Math.abs(from);
+
+        if(from <= 0 ){
+            from = 0;
+        }
+    }
+
+    if (to >= array.length){
+        to = array.length;
+
+    } else if (to <= 0){
+        to = Math.abs(to);
+    }
+
+    for(let i = from; i< to; i++){
+        newArray.push(array[i]);
+    }
+    return newArray;
+}
 /*
  Задание 6 *:
 
@@ -72,6 +98,14 @@ function slice(array, from, to) {
  Proxy должен перехватывать все попытки записи значений свойств и возводить это значение в квадрат
  */
 function createProxy(obj) {
+    var p = new Proxy(target, handler);
+    var handler = {
+        get: function(target, name){
+            return name in target?
+                target[name] :
+                37;
+        }
+    };
 }
 
 export {
