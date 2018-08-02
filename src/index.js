@@ -17,29 +17,19 @@
    isAllTrue([100, 2, 3, 4, 5], n => n < 10) // вернет false
  */
 function isAllTrue(array, fn) {
-    let a = 0; // переменные нужны для проверки массива
-    let b = 0;
-
-    if (( Array.isArray(array) == false ) || (array.length <= 0)) {
+    if ((Array.isArray(array) == false) || (array.length <= 0)) {
         throw new Error("empty array");
-    } else if (typeof fn != 'function') {
+    }
+    if (typeof fn != 'function') {
         throw new Error("fn is not a function");
-    } else {
+    }
 
-        for (let i = 0; i < array.length; i++) {
-            let c = fn(array[i]); // на каждой итерации вызываем fn и в качестве аргумента передаем элемент массива и результат сравнения записываем в с
-            if (c == false) { // если результат сравнения false, то увеличиваем переменную b
-                b++;
-            } else if (c == true) { // если результат сравнения true
-                a++; // то увеличиваем переменную a на каждой итерации и она становится равна длине массива
-            }
-            if (array.length == a) {
-                return true; // если a равна длине массива, то true
-            } else if (b > 0) {
-                return false; // иначе false
-            }
+    for (let i = 0; i < array.length; i++) {
+        if (!fn(array[i])) {
+            return false;
         }
     }
+    return true;
 }
 
 
@@ -60,31 +50,20 @@ function isAllTrue(array, fn) {
    isSomeTrue([1, 2, 3, 4, 5], n => n > 20) // вернет false
  */
 function isSomeTrue(array, fn) {
-    let a = 0; // переменные нужны для проверки
-    let b = 0;
-
-    if (( Array.isArray(array) == false ) || (array.length <= 0)) {
+    if ((Array.isArray(array) == false) || (array.length <= 0)) {
         throw new Error("empty array");
-    } else if (typeof fn != 'function') {
+    }
+    if (typeof fn != 'function') {
         throw new Error("fn is not a function");
-    } else {
+    }
 
-        for (let i = 0; i < array.length; i++) {
-            let c = fn(array[i]); // на каждой итерации вызываем fn и в качестве аргумента передаем элемент массива и результат сравнения записываем в с
-            if (c == false) { // если результат сравнения false, то увеличиваем переменную b
-                b++;
-            } else if (c == true) { // Сравниваем на true
-                a = true;
-                break;  // прерываем цикл, если хоть одно условие true
-            }
+    for (let i = 0; i < array.length; i++) {
+        if (fn(array[i])) {
+            return true;
         }
-    }
 
-    if (a == true){
-        return true;
-    } else if (b > 0) {
-        return false; // иначе false
     }
+    return false;
 }
 
 /*
@@ -99,20 +78,22 @@ function isSomeTrue(array, fn) {
    - fn не является функцией (с текстом "fn is not a function")
  */
 function returnBadArguments(fn) {
-    let newArray = [];
 
     if(typeof fn != 'function') {
         throw new Error("fn is not a function");
-    }else {
+    };
 
-        for(let i = 1; i < arguments.length; i++) {
+    let newArray = [];
 
-            function fn() {
-                newArray.push(arguments[i]);
-
+    for(let i = 1; i < arguments.length; i++) {
+        try {
+            fn(arguments[i]);
+        }
+        catch (e) {
+            newArray.push(arguments[i])
         }
     }
-}
+
     return newArray;
 }
 
@@ -154,9 +135,8 @@ function calculator(number = 0) {
         for (let i = 0; i < arguments.length; i++) {
             if (arguments[i] == 0) {
                 throw new Error("division by 0");
-            } else {
-                number = number / arguments[i];
-            }
+            } number = number / arguments[i];
+
         }
         return number;
     }
